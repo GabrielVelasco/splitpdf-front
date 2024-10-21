@@ -45,7 +45,8 @@ function PDFSplitter() {
     formData.append('max_size', maxSize);
 
     // POST request to the backend
-    const base_url = 'http://pqpmds.us-east-1.elasticbeanstalk.com'; // help
+    // const base_url = 'http://pqpmds.us-east-1.elasticbeanstalk.com'; // help
+    const base_url = 'http://127.0.0.1:5000'; // help
 
     fetch(`${base_url}/api/split`, {
       method: 'POST',
@@ -54,14 +55,16 @@ function PDFSplitter() {
       .then((response) => {
         if (response.ok) {
           // Handle successful response
+          console.dir(response);
           
           return response.blob(); // returns a promise, resolved with the value of the body text
 
         } else {
-          // Handle server errors
-          alert('An error occurred while splitting the PDF.');
+          // Show error message when response status is 500
+          alert('An error occurred while splitting the PDF file. Please try again later.');
 
-          throw new Error('Server response wasn\'t OK');
+          // throw error with 'jsonfy' response from server (status code 500)
+          throw new Error(response.json());
         }
       })
       .then((blob) => {
@@ -71,7 +74,7 @@ function PDFSplitter() {
         
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'split_pdfs.zip');
+        link.setAttribute('download', 'pdfs.zip');
 
         document.body.appendChild(link);
         link.click();
@@ -108,16 +111,11 @@ function PDFSplitter() {
             label="Maximum Size per Part (MB)"
             onChange={handleMaxSizeChange}
           >
+
             {[1,2,5,10,15,20,25,30,35,40,45,50].map(element => {
-              <MenuItem value={element}>{element} MB</MenuItem>
+              return <MenuItem value={element}>{element} MB</MenuItem>
             })}
 
-            {/* <MenuItem value={1}>1 MB</MenuItem>
-            <MenuItem value={2}>2 MB</MenuItem>
-            <MenuItem value={5}>5 MB</MenuItem>
-            <MenuItem value={10}>10 MB</MenuItem>
-            <MenuItem value={20}>20 MB</MenuItem>
-            <MenuItem value={50}>50 MB</MenuItem> */}
           </Select>
         </FormControl>
         <Button
