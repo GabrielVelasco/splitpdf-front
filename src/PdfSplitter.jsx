@@ -45,7 +45,7 @@ function PDFSplitter() {
     formData.append('max_size', maxSize);
 
     // POST request to the backend
-    const base_url = 'http://pqpmds.us-east-1.elasticbeanstalk.com'; // help
+    const base_url = 'https://pqpmds.us-east-1.elasticbeanstalk.com'; // help
 
     fetch(`${base_url}/api/split`, {
       method: 'POST',
