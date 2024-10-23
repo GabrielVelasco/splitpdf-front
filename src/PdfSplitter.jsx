@@ -31,14 +31,14 @@ function PDFSplitter() {
 
   // handle form submission
   const handleSubmit = (event) => {
-    setSplitingFile(true)
-
     event.preventDefault();
 
     if (!selectedFile) {
-      alert('Please select a PDF file to upload.');
-
+      alert('Please select a PDF file to split.');
       return;
+    
+    }else {
+      setSplitingFile(true)
     }
 
     // Prepare form data (infos to be sent to the backend)
