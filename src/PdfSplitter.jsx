@@ -56,11 +56,8 @@ function PDFSplitter() {
       body: formData,
     })
       .then((response) => {
-        setSplitingFile(false)
-
         if (response.ok) {
           // Handle successful response
-          // add notification for the user with msg "Wait a few seconds for the download to start..."
           alert('Wait a few seconds for the download to start...');
           
           return response.blob(); // returns a promise, resolved with the value of the body text
@@ -85,6 +82,8 @@ function PDFSplitter() {
         document.body.appendChild(link);
         link.click();
         link.parentNode.removeChild(link);
+        
+        setSplitingFile(false)
       })
 
       .catch((error) => {
