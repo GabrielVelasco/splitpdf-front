@@ -33,7 +33,7 @@ function PDFSplitter() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!selectedFile) {
+    if (!selectedFile || selectedFile.type !== 'application/pdf') {
       alert('Please select a PDF file to split.');
       return;
     
@@ -88,6 +88,7 @@ function PDFSplitter() {
 
       .catch((error) => {
         console.error('Error:', error);
+        setSplitingFile(false)
       });
   };
 
