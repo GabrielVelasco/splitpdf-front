@@ -10,13 +10,14 @@ import {
   FormControl,
 } from '@mui/material';
 
-// import '../style/PdfSlitter.css'; // Import the CSS file
+import './style/PdfSlitter.css';
 
 function PDFSplitter() {
 
   // state variables to store the selected file and the max size (sent to the backend)
   const [selectedFile, setSelectedFile] = useState(null); // selectedFile initially set to 'null'
   const [maxSize, setMaxSize] = useState(1); // default max_size will be 1 MB...
+  const [splitingFile, setSplitingFile] = useState(false)
 
   // event listener for file selection input (to set the selectedFile state)
   const handleFileChange = (event) => {
@@ -30,6 +31,8 @@ function PDFSplitter() {
 
   // handle form submission
   const handleSubmit = (event) => {
+    setSplitingFile(true)
+
     event.preventDefault();
 
     if (!selectedFile) {
@@ -45,13 +48,16 @@ function PDFSplitter() {
     formData.append('max_size', maxSize);
 
     // POST request to the backend
-    const base_url = 'https://pqpmds.us-east-1.elasticbeanstalk.com'; // help
+    const base_url = 'https://pqpmds.us-east-1.elasticbeanstalk.com';
+    // const base_url = 'http://127.0.0.1:5000';
 
     fetch(`${base_url}/api/split`, {
       method: 'POST',
       body: formData,
     })
       .then((response) => {
+        setSplitingFile(false)
+
         if (response.ok) {
           // Handle successful response
           console.dir(response);
@@ -123,8 +129,15 @@ function PDFSplitter() {
           color="primary"
           fullWidth
           style={{ marginTop: '20px' }}
+          disabled={splitingFile}
         >
-          Split PDF
+
+          {splitingFile ? (
+            <div className='spinner'></div>
+          ) : (
+            'Split PDF'
+          )}
+
         </Button>
       </form>
     </Container>
