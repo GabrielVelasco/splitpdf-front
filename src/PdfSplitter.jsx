@@ -60,7 +60,8 @@ function PDFSplitter() {
 
         if (response.ok) {
           // Handle successful response
-          console.dir(response);
+          // add notification for the user with msg "Wait a few seconds for the download to start..."
+          alert('Wait a few seconds for the download to start...');
           
           return response.blob(); // returns a promise, resolved with the value of the body text
 
