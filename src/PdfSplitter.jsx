@@ -84,7 +84,6 @@ function PDFSplitter() {
 
         document.body.appendChild(link);
         link.click();
-        alert('Wait a few seconds for the download to start...');
         link.parentNode.removeChild(link);
       })
 
